@@ -2,82 +2,102 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>REGISTRASI</title>
+  <title> REGISTRASI </title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="container">
-  <div class="title" style="text-align: center;">FORM REGISTRASI</div>
-  <div class="content">
-    <div class="user-details">
-      <div class="input-box">
+  <div class="container">
+    <div class="title" style="text-align: center;">FORM REGISTRASI</div>
+    <div class="content">
+      <div class="user-details">
         <form id="uploadForm" action="https://script.google.com/macros/s/AKfycbyAr8F4YGY5SwjBJFLTbfk4c3cQtxMMZ90q9qvBTSXJS6nVJvsoEcZUki3pUaQL80eZ6Q/exec" method="POST">
           <input type="hidden" value="" name="fileContent" id="fileContent">
           <input type="hidden" value="" name="filename" id="filename">
-          <div class="user-details">
-            <div class="input-box">
-              <label for="nama" class="form-label">Nama Lengkap</label>
-              <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukan nama lengkap anda" required>
-            </div>
+          <div class="input-box">
+            <label for="nama" class="form-label">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukan nama lengkap anda" required>
+          </div>
 
-            <div class="input-box">
-              <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-              <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control" placeholder="Masukan tempat lahir anda" required>
-            </div>
+          <div class="input-box">
+            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+            <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control" placeholder="Masukan tempat lahir anda" required>
+          </div>
 
-            <div class="input-box">
-              <label for="alamat" class="form-label">Alamat</label>
-              <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Masukan alamat anda" required>
-            </div>
-            <div class="input-box">
-              <label for="email" class="form-label">Email</label>
-              <input type="text" id="email" name="email" class="form-control" placeholder="Masukan email anda " required>
-            </div>
-            <div class="input-box">
-              <label for="kontak" class="form-label">Kontak</label>
-              <input type="text" id="kontak" name="kontak" class="form-control" placeholder="Masukan nomor telepon anda " required>
-            </div>
-            <div class="input-box">
-              <label for="file" class="form-label">File</label>
-              <input required id="attach" name="attach" type="file"/>
-            </div>
-            <div class="button" style="width: 100%;">
-              <input type="button" value="KIRIM DATA" onclick="UploadFile();" />
-            </div>
-          </form>
-          <!-- رسالة "تم الإرسال بنجاح" -->
-          <div id="message" style="display: none; text-align: center;">تم الإرسال بنجاح!</div>
-        </div>
+          <div class="input-box">
+            <label for="alamat" class="form-label">Alamat</label>
+            <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Masukan alamat anda" required>
+          </div>
+
+          <div class="input-box">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="Masukan email anda " required>
+          </div>
+
+          <div class="input-box">
+            <label for="kontak" class="form-label">Kontak</label>
+            <input type="text" id="kontak" name="kontak" class="form-control" placeholder="Masukan nomor telepon anda " required>
+          </div>
+
+          <div class="input-box">
+            <label for="file" class="form-label"> File</label>
+            <input required id="attach" name="attach" type="file"/>
+          </div>
+
+           <div class="button" style="width: 100%;">
+            <button type="button" id="submitButton" onclick="submitAndClearForm();">KIRIM DATA</button>
+            <span id="processingMessage" style="display: none;">Sedang Diproses...</span>
+            <span id="successMessage" style="display: none;">Data Terkirim!</span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  function UploadFile() {
+ <script>
+  function submitAndClearForm() {
     var reader = new FileReader();
     var file = document.getElementById('attach').files[0];
+    var submitButton = document.getElementById('submitButton');
+    var processingMessage = document.getElementById('processingMessage');
+    var successMessage = document.getElementById('successMessage');
+
     reader.onload = function(){
       document.getElementById('fileContent').value = reader.result;
       document.getElementById('filename').value = file.name;
 
-      // إرسال البيانات إلى الرابط المستهدف
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://script.googleusercontent.com/macros/echo?user_content_key=q98HU5Fq3UVX34bML0WgMQDv7Tiq6X16KmeRSp0yGRVhst2w_ImCvX6S8VwaHXGuT3G1fjY-_qhC6XWs_0USFIMFr-VRt4prm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKWKBlDYehofOeydeSkjy1DdFSw8COvqO0YIkWMn2sg890Y1AiuDWEVJx9734vhSoa1fP731Bu_VZlvek900zaESdm7wHg4f-Nz9Jw9Md8uu&lib=Mb-KEL7ijNyIjarORckjcMgl-NjIbvANT', true);
-      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function() {
-        if(xhr.readyState == 4 && xhr.status == 200) {
-          // بعد نجاح الإرسال، قم بتوجيه المستخدم إلى الرابط المطلوب
-          window.location.href = 'https://gg.gg';
-        }
-      };
-      // إرسال البيانات كنص عادي
-      var data = "fileContent=" + encodeURIComponent(reader.result) + "&filename=" + encodeURIComponent(file.name);
-      xhr.send(data);
-    }
+      // Disable the submit button and show the processing message
+      submitButton.disabled = true;
+      processingMessage.style.display = 'block';
+
+      // Submit the form using fetch
+      fetch(document.getElementById('uploadForm').action, {
+        method: 'POST',
+        body: new FormData(document.getElementById('uploadForm'))
+      })
+      .then(response => response.text())
+      .then(data => {
+        // Clear the form fields and hide the processing message
+        document.getElementById('uploadForm').reset();
+        submitButton.disabled = false;
+        processingMessage.style.display = 'none';
+
+        // Show the success message and hide it after 3 seconds
+        successMessage.style.display = 'block';
+        setTimeout(function() {
+          successMessage.style.display = 'none';
+        }, 3000);
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        // Handle submission error (optional)
+        submitButton.disabled = false;
+        processingMessage.style.display = 'none';
+      });
+    };
     reader.readAsDataURL(file);
   }
-</script>
+  </script>
 
 </body>
 </html>
