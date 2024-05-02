@@ -54,21 +54,21 @@
 </div>
 
 <script>
- function UploadFile() {
+  function UploadFile() {
     var reader = new FileReader();
     var file = document.getElementById('attach').files[0];
     reader.onload = function(){
       document.getElementById('fileContent').value = reader.result;
       document.getElementById('filename').value = file.name;
 
-      // إرسال البيانات باستخدام XMLHttpRequest
+      // إرسال البيانات إلى الرابط المستهدف
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'https://script.googleusercontent.com/macros/echo?user_content_key=q98HU5Fq3UVX34bML0WgMQDv7Tiq6X16KmeRSp0yGRVhst2w_ImCvX6S8VwaHXGuT3G1fjY-_qhC6XWs_0USFIMFr-VRt4prm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKWKBlDYehofOeydeSkjy1DdFSw8COvqO0YIkWMn2sg890Y1AiuDWEVJx9734vhSoa1fP731Bu_VZlvek900zaESdm7wHg4f-Nz9Jw9Md8uu&lib=Mb-KEL7ijNyIjarORckjcMgl-NjIbvANT', true);
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       xhr.onreadystatechange = function() {
         if(xhr.readyState == 4 && xhr.status == 200) {
-          // عرض رسالة "تم الإرسال بنجاح!"
-          document.getElementById('message').style.display = 'block';
+          // بعد نجاح الإرسال، قم بتوجيه المستخدم إلى الرابط المطلوب
+          window.location.href = 'https://gg.gg';
         }
       };
       // إرسال البيانات كنص عادي
@@ -78,5 +78,6 @@
     reader.readAsDataURL(file);
   }
 </script>
+
 </body>
 </html>
